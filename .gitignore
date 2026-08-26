@@ -39,3 +39,6 @@ npm-debug.log*
 
 # minio local data
 infrastructure/minio-data/
+.agents/
+.claude/
+skills-lock.json
