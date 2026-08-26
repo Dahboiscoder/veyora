@@ -1,5 +1,9 @@
 # VEYORA — Real Estate, Reimagined
 
+**🔗 Live demo:** [veyora-lilac.vercel.app](https://veyora-lilac.vercel.app) · **Repo:** [github.com/Dahboiscoder/veyora](https://github.com/Dahboiscoder/veyora)
+
+![VEYORA screenshot](docs/screenshot.png)
+
 VEYORA is a next-generation real-estate marketplace built for Africa: 3D property
 tours, 360° panoramas, live-hosted viewings, TikTok-style video discovery, an
 interactive map, verified agents/agencies, real-time messaging, and full
