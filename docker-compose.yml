@@ -1,0 +1,71 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nyumba
+      POSTGRES_PASSWORD: nyumba_dev_password
+      POSTGRES_DB: nyumba
+    ports:
+      # Host port 5434: 5432/5433 are already taken by other local projects
+      # on this machine (naflow, africa-eats). Container-internal port is
+      # still 5432 — only the host-side mapping changed.
+      - "5434:5432"
+    volumes:
+      - nyumba_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nyumba"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - nyumba_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: nyumba
+      MINIO_ROOT_PASSWORD: nyumba_dev_password
+    ports:
+      - "9000:9000" # S3 API
+      - "9001:9001" # Web console
+    volumes:
+      - nyumba_minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # One-shot job: creates the public "media" bucket + read-only anonymous
+  # download policy so uploaded property media is servable directly by URL.
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 nyumba nyumba_dev_password &&
+      mc mb -p local/media &&
+      mc anonymous set download local/media &&
+      exit 0
+      "
+
+volumes:
+  nyumba_postgres_data:
+  nyumba_redis_data:
+  nyumba_minio_data:

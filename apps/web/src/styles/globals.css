@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-void-700/60;
+  }
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-void-950 text-white antialiased;
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display), system-ui, sans-serif;
+  }
+  ::selection {
+    @apply bg-ember-500/40 text-white;
+  }
+
+  /* Slim, dark scrollbar to match the cinematic theme */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme("colors.void.700");
+    border-radius: 999px;
+    border: 2px solid theme("colors.void.950");
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme("colors.void.600");
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.06] backdrop-blur-xl border border-white/10;
+  }
+  .glass-card {
+    @apply glass rounded-2xl shadow-glass;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-ember-500 to-ember-400 px-6 py-3 font-semibold text-white shadow-glow transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full glass px-6 py-3 font-semibold text-white transition-colors duration-300 hover:bg-white/[0.12];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 font-medium text-white/70 transition-colors duration-300 hover:text-white hover:bg-white/[0.06];
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs font-medium text-white/80;
+  }
+  .live-dot {
+    @apply relative inline-flex h-2 w-2 rounded-full bg-red-500 animate-pulse-live;
+  }
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-[0.25em] text-ember-400;
+  }
+  .text-gradient {
+    @apply bg-ember-aurora bg-clip-text text-transparent;
+  }
+  .input {
+    @apply w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-colors focus:border-ember-500/50 focus:bg-white/[0.06];
+  }
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-white/70;
+  }
+  .field-error {
+    @apply mt-1.5 text-xs text-red-400;
+  }
+}
+
+@layer utilities {
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .snap-y-mandatory {
+    scroll-snap-type: y mandatory;
+  }
+  .snap-start {
+    scroll-snap-align: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Slow ambient zoom/pan for feed slides that don't have video — used via
+   Tailwind's arbitrary animate-[kenburns_...] utility. */
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.12) translate(-1%, -1%); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+
+/* MapLibre popup: strip the default white chrome so our glass card content
+   can render on the dark theme without a clashing frame. */
+.maplibregl-popup.property-map-popup .maplibregl-popup-content {
+  background: transparent;
+  padding: 0;
+  border-radius: 1rem;
+  box-shadow: none;
+}
+.maplibregl-popup.property-map-popup .maplibregl-popup-tip {
+  display: none;
+}
+.maplibregl-ctrl-attrib {
+  background: rgba(6, 7, 10, 0.6) !important;
+}
+.maplibregl-ctrl-attrib a {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.maplibregl-ctrl-group {
+  background: rgba(13, 15, 20, 0.85) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.maplibregl-ctrl-group button {
+  background: transparent !important;
+}
+.maplibregl-ctrl-group button + button {
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}

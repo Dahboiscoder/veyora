@@ -1,0 +1,41 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# testing
+coverage/
+
+# next.js
+.next/
+out/
+
+# production
+dist/
+build/
+
+# env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# prisma
+packages/db/generated/
+
+# misc
+.DS_Store
+*.pem
+*.log
+npm-debug.log*
+
+# turbo/cache
+.turbo/
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# minio local data
+infrastructure/minio-data/

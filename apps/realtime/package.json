@@ -1,0 +1,30 @@
+{
+  "name": "@nyumba/realtime",
+  "private": true,
+  "version": "0.1.0",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json --noEmit",
+    "start": "tsx src/server.ts"
+  },
+  "dependencies": {
+    "@nyumba/db": "*",
+    "@nyumba/shared": "*",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5",
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^9.0.2",
+    "cookie": "^0.6.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "tsx": "^4.19.0",
+    "@types/node": "^20.14.15",
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/cookie": "^0.6.0"
+  }
+}
