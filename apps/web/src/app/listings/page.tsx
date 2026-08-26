@@ -2,6 +2,7 @@
 
 import { Suspense, useState } from "react";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 import { SlidersHorizontal, Map as MapIcon, List, X, Search } from "lucide-react";
 import { usePropertySearch } from "@/hooks/usePropertySearch";
 import { FilterPanel } from "@/components/listings/FilterPanel";
@@ -19,8 +20,12 @@ const PropertyMap = dynamic(() => import("@/components/map/PropertyMap").then((m
 
 function ListingsPageInner() {
   const { filters, setFilters, clearFilters, data, isLoading, isFetching } = usePropertySearch();
+  const searchParams = useSearchParams();
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [showMap, setShowMap] = useState(false);
+  // Lets the mobile bottom-nav "Map" tab link straight into the map view
+  // instead of dropping the user on the plain list with no indication a
+  // map exists (see /listings?map=1 in MobileTabBar).
+  const [showMap, setShowMap] = useState(() => searchParams.get("map") === "1");
 
   const properties = data?.items ?? [];
   const activeFilterCount = Object.keys(filters).filter((k) => k !== "page" && k !== "sort").length;
@@ -59,15 +64,20 @@ function ListingsPageInner() {
           </h1>
           <p className="mt-1 text-sm text-white/50">Across 11 African countries, updated daily.</p>
         </div>
-        <div className="flex items-center gap-2">
-          <button onClick={() => setFiltersOpen(true)} className="btn-secondary !px-4 !py-2.5 text-sm lg:hidden">
+        {/* overflow-x-auto: on narrow phones these three controls don't all
+            fit on one line — this scrolls the toolbar itself instead of
+            blowing out the whole page's horizontal bounds. */}
+        <div className="flex max-w-full items-center gap-2 overflow-x-auto">
+          <button onClick={() => setFiltersOpen(true)} className="btn-secondary !px-4 !py-2.5 text-sm shrink-0 lg:hidden">
             <SlidersHorizontal className="h-4 w-4" />
             Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
           </button>
-          <SortSelect value={filters.sort} onChange={setFilters} />
+          <div className="shrink-0">
+            <SortSelect value={filters.sort} onChange={setFilters} />
+          </div>
           <button
             onClick={() => setShowMap((v) => !v)}
-            className={cn("btn-secondary !px-4 !py-2.5 text-sm", showMap && "!bg-ember-500/20 !text-ember-300")}
+            className={cn("btn-secondary !px-4 !py-2.5 text-sm shrink-0", showMap && "!bg-ember-500/20 !text-ember-300")}
           >
             {showMap ? <List className="h-4 w-4" /> : <MapIcon className="h-4 w-4" />}
             {showMap ? "Hide map" : "Show map"}

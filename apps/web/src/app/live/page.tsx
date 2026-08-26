@@ -63,7 +63,7 @@ export default async function LivePage() {
                 />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/30" />
-              <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-red-500 px-2.5 py-1 text-xs font-bold text-white">
+              <div className="absolute left-3 top-3 flex items-center gap-1.5 rounded-full bg-red-600 px-2.5 py-1 text-xs font-bold text-white">
                 <Radio className="h-3 w-3" /> LIVE
               </div>
               <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs font-medium text-white backdrop-blur">

@@ -9,7 +9,9 @@ import { useImmersiveRoute } from "@/hooks/useImmersiveRoute";
 
 const TABS = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/map", label: "Map", icon: MapPinned },
+  // There's no standalone /map route — the map lives inside /listings as a
+  // toggleable view. ?map=1 opens straight into it (see ListingsPageInner).
+  { href: "/listings?map=1", label: "Map", icon: MapPinned, matchPathname: "/listings" },
   { href: "/feed", label: "Reels", icon: Clapperboard },
   { href: "/live", label: "Live", icon: Radio },
 ];
@@ -25,7 +27,7 @@ export function MobileTabBar() {
     <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-void-950/90 backdrop-blur-xl pb-[env(safe-area-inset-bottom)] md:hidden">
       <div className="grid grid-cols-5">
         {TABS.map((tab) => {
-          const active = pathname === tab.href;
+          const active = pathname === (tab.matchPathname ?? tab.href);
           const Icon = tab.icon;
           return (
             <Link

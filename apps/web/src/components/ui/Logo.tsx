@@ -28,7 +28,7 @@ export function Logo({ className }: { className?: string }) {
         transition={bouncy}
       >
         <span className="font-display text-lg font-semibold tracking-tight text-white">VEYORA</span>
-        <span className="mt-0.5 whitespace-nowrap text-[9px] font-medium uppercase tracking-[0.14em] text-white/45">
+        <span className="mt-0.5 whitespace-nowrap text-[9px] font-medium uppercase tracking-[0.14em] text-white/60">
           Buy • Rent • Stay • Sell
         </span>
       </motion.span>

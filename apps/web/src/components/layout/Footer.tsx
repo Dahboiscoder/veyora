@@ -79,7 +79,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/40 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-white/60 sm:flex-row">
           <p>© {new Date().getFullYear()} VEYORA. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/legal/terms" className="hover:text-white/70">

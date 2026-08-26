@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 export function LiveBadge({ viewers, className }: { viewers?: number; className?: string }) {
   return (
-    <span className={cn("flex items-center gap-1.5 rounded-full bg-red-500 px-2.5 py-1 text-xs font-bold text-white shadow-lg", className)}>
+    <span className={cn("flex items-center gap-1.5 rounded-full bg-red-600 px-2.5 py-1 text-xs font-bold text-white shadow-lg", className)}>
       <span className="relative flex h-1.5 w-1.5">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
